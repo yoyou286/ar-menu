@@ -2,66 +2,59 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🍴 AR Restaurant Menu</title>
+  <title>🍽 AR Restaurant Menu</title>
   <script type="module"
     src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
   </script>
+
   <style>
-    body { font-family: Arial, sans-serif; text-align:center; margin:0; padding:0; }
-    h1 { margin:20px; }
-    .dish { margin: 40px 0; }
-    .info { font-size:18px; margin-top:10px; }
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .price {
+      font-size: 20px;
+      margin-top: 10px;
+    }
   </style>
 </head>
 
 <body>
 
-  <h1>🍴 Our Menu in 3D & AR</h1>
+  <h1>🍽 Our Menu in AR</h1>
 
-  <div class="dish">
-    <model-viewer
-      src="pizza.glb"
-      ar
-      ar-modes="scene-viewer webxr quick-look"
-      camera-controls
-      auto-rotate
-      style="width:300px; height:300px;">
-    </model-viewer>
-    <div class="info">
-      <strong>Pizza Margherita</strong><br>
-      $8.99
-    </div>
-  </div>
+  <!-- 3D Viewer -->
+  <model-viewer
+    id="viewer"
+    src="pizza.glb"
+    ar
+    ar-modes="scene-viewer webxr quick-look"
+    camera-controls
+    auto-rotate
+    style="width:100%; height:60vh;">
+  </model-viewer>
 
-  <div class="dish">
-    <model-viewer
-      src="burger.glb"
-      ar
-      ar-modes="scene-viewer webxr quick-look"
-      camera-controls
-      auto-rotate
-      style="width:300px; height:300px;">
-    </model-viewer>
-    <div class="info">
-      <strong>Classic Burger</strong><br>
-      $10.50
-    </div>
-  </div>
+  <div class="price" id="price">Pizza Margherita – $8.99</div>
 
-  <div class="dish">
-    <model-viewer
-      src="salad.glb"
-      ar
-      ar-modes="scene-viewer webxr quick-look"
-      camera-controls
-      auto-rotate
-      style="width:300px; height:300px;">
-    </model-viewer>
-    <div class="info">
-      <strong>Caesar Salad</strong><br>
-      $7.50
-    </div>
-  </div>
+  <!-- Menu Buttons -->
+  <button onclick="changeDish('pizza.glb', 'Pizza Margherita – $8.99')">🍕 Pizza</button>
+  <button onclick="changeDish('burger.glb', 'Classic Burger – $10.50')">🍔 Burger</button>
+  <button onclick="changeDish('salad.glb', 'Caesar Salad – $7.50')">🥗 Salad</button>
+
+  <script>
+    function changeDish(model, text) {
+      document.getElementById("viewer").src = model;
+      document.getElementById("price").innerText = text;
+    }
+  </script>
 
 </body>
 </html>
