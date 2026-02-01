@@ -2,59 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>🍽 AR Restaurant Menu</title>
+  <title>AR Menu</title>
+
   <script type="module"
     src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js">
   </script>
 
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
       text-align: center;
-      margin: 0;
-      padding: 0;
+      background: #f7f7f7;
+    }
+    .buttons {
+      margin: 10px;
     }
     button {
-      padding: 10px 15px;
-      margin: 5px;
+      padding: 12px 18px;
       font-size: 16px;
+      margin: 5px;
+      border-radius: 8px;
+      border: none;
       cursor: pointer;
-    }
-    .price {
-      font-size: 20px;
-      margin-top: 10px;
     }
   </style>
 </head>
 
 <body>
 
-  <h1>🍽 Our Menu in AR</h1>
+<h2>🍽️ AR Menu</h2>
 
-  <!-- 3D Viewer -->
-  <model-viewer
-    id="viewer"
-    src="pizza.glb"
-    ar
-    ar-modes="scene-viewer webxr quick-look"
-    camera-controls
-    auto-rotate
-    style="width:100%; height:60vh;">
-  </model-viewer>
+<model-viewer
+  id="viewer"
+  src="pizza.glb"
+  ar
+  ar-modes="quick-look webxr scene-viewer"
+  camera-controls
+  auto-rotate
+  style="width:100%; height:70vh;">
+</model-viewer>
 
-  <div class="price" id="price">Pizza Margherita – $8.99</div>
+<div class="buttons">
+  <button onclick="prevDish()">⬅ Previous</button>
+  <button onclick="nextDish()">Next ➡</button>
+</div>
 
-  <!-- Menu Buttons -->
-  <button onclick="changeDish('pizza.glb', 'Pizza Margherita – $8.99')">🍕 Pizza</button>
-  <button onclick="changeDish('burger.glb', 'Classic Burger – $10.50')">🍔 Burger</button>
-  <button onclick="changeDish('salad.glb', 'Caesar Salad – $7.50')">🥗 Salad</button>
+<script>
+  const dishes = [
+    "pizza.glb",
+    "burger.glb",
+    "dessert.glb"
+  ];
 
-  <script>
-    function changeDish(model, text) {
-      document.getElementById("viewer").src = model;
-      document.getElementById("price").innerText = text;
-    }
-  </script>
+  let currentIndex = 0;
+  const viewer = document.getElementById("viewer");
+
+  function nextDish() {
+    currentIndex = (currentIndex + 1) % dishes.length;
+    viewer.src = dishes[currentIndex];
+  }
+
+  function prevDish() {
+    currentIndex =
+      (currentIndex - 1 + dishes.length) % dishes.length;
+    viewer.src = dishes[currentIndex];
+  }
+</script>
 
 </body>
 </html>
